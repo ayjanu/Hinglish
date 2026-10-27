@@ -94,7 +94,7 @@ HV-Roman is lowercase ASCII, matches how Hindi speakers already type, and is gen
 | च / छ | ch / chh | चाय chaay | chai, chay |
 | श ष / स | sh / s | शुभ shubh | subh |
 | व | v | वाला vaala | wala, vala |
-| nukta ज़ फ़ ड़ | z f r | ज़रूर zaroor | jaroor, zarur |
+| nukta ज़ फ़ ड़ | z f d | ज़रूर zaroor | jaroor, zarur |
 | ं ँ nasal | n (m before p/b/m) | नहीं nahin | nahi, nai |
 
 The schwa rule is the single most important step: शुभ is taught as shubh, not ITRANS shubha. Rule-based schwa deletion handles most words; the Arora et al. classifier handles the rest, and the lexicon can override any word by hand.
@@ -278,6 +278,7 @@ The system is only as trustworthy as its gold sets, so evaluation is built in Ph
 - [x] Final-vowel convention: kya / achha.
 - [x] Audio source: TTS first, native recordings later.
 - [x] Scope: Hindi first, built to extend to other non-Latin scripts.
+- [ ] Open (Oct 26, from Phase 0 data): medial long vowels. HV-Roman 1.0 writes aa / ee / oo (raaja, theek, doodh), but only about 20% of real spellings in Dakshina do. Switching to single vowels (raja, thik, dudh) would raise agreement with people's most common spelling from 34% to 53%, at the cost of hiding vowel length outside the precise view. A change is a major scheme bump, so decide before Phase 3 content is written. Details: eval/README.md.
 
 ## Sources
 

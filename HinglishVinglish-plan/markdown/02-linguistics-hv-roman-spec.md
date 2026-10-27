@@ -18,7 +18,7 @@ Stops and affricates form a 5 × 5 grid: five places of articulation, each with 
 | Dental | त t | थ th | द d | ध dh | न n |
 | Labial | प p | फ ph | ब b | भ bh | म m |
 
-Other consonants: य y, र r, ल l, व v, श sh, ष sh, स s, ह h. Flaps ड़ (r) and ढ़ (rh). Perso-Arabic and English loan sounds are written with a nukta dot: क़ q, ख़ kh, ग़ gh, ज़ z, फ़ f.
+Other consonants: य y, र r, ल l, व v, श sh, ष sh, स s, ह h. Flaps ड़ and ढ़ are written d and dh, as most people type them (ladka, padhna). Perso-Arabic and English loan sounds are written with a nukta dot: क़ q, ख़ kh, ग़ gh, ज़ z, फ़ f.
 
 ### Vowels
 
@@ -95,8 +95,8 @@ Three spellings exist for every word: **canonical** (HV-Roman, taught and displa
 | ग़ | gh | ġ | g |
 | ज़ | z | z | j |
 | फ़ | f | f | ph, p |
-| ड़ | r | ṛ | d, rr, dd |
-| ढ़ | rh | ṛh | dh, r |
+| ड़ | d | ṛ | r, rr, dd |
+| ढ़ | dh | ṛh | rh, r |
 
 ### Signs, conjuncts and symbols
 
@@ -134,7 +134,7 @@ The converter runs as an ordered pipeline over one normalized word; the first ma
 The hard part of Hindi grapheme-to-phoneme conversion is deciding whether a written inherent vowel is pronounced ([Arora et al., 2020](https://aclanthology.org/2020.acl-main.696)).
 
 - **Word-final:** delete the inherent schwa of the last consonant. Keep it only for words on the retained-final list (tatsama words ending in a cluster such as मित्र mitra); this list is curated, not guessed.
-- **Word-medial:** apply Ohala's rule ə → ∅ / VC\_CV, scanning right to left, which is reported correct about 89% of the time ([Wikipedia: Schwa deletion](https://en.wikipedia.org/wiki/Schwa_deletion_in_Indo-Aryan_languages)). Never delete in the first syllable; never across a marked morpheme boundary; never next to a virama cluster.
+- **Word-medial:** apply Ohala's rule ə → ∅ / VC\_CV, scanning right to left, which is reported correct about 89% of the time ([Wikipedia: Schwa deletion](https://en.wikipedia.org/wiki/Schwa_deletion_in_Indo-Aryan_languages)). A nasalized vowel counts as the left-hand V (अंतराल antraal; measured on Dakshina, see eval/README.md). Never delete in the first syllable; never across a marked morpheme boundary; never next to a virama cluster.
 - **Classifier override:** in Phase 1, replace the medial rule with the gradient-boosted classifier from Arora et al. ([code and data](https://github.com/aryamanarora/schwa-deletion)), keeping the rule as fallback.
 
 | Word | Akshara analysis | Result | Why |
@@ -149,7 +149,7 @@ The hard part of Hindi grapheme-to-phoneme conversion is deciding whether a writ
 ### Context rules
 
 - **Final long vowels** आ ई ऊ become a, i, u at word end (क्या kya, लड़की ladki, आलू aalu). Because final schwa is deleted, a word-final "a" always signals आ except on the retained-final list.
-- **Final nasal vowels** keep their n and the vowel's medial form if the vowel is long and nasal (हूँ hoon, कहाँ kahaan, नहीं nahin).
+- **Final nasal vowels** keep their n and the vowel's medial form (हूँ hoon, कहाँ kahaan, हैं hain), with two exceptions that match common spelling: final ें is ein (में mein, हमें hamein) and final ीं is in (नहीं nahin).
 - **Anusvara before a consonant** becomes m before p, ph, b, bh, m (संबंध sambandh) and n elsewhere (हिंदी hindi).
 - **Gemination** is written doubled (पक्का pakka, बच्चा bachcha, दिल्ली dilli), with one exception decided on Oct 26: च्छ collapses to chh (अच्छा achha).
 - **Aspirated + same-place aspirated** conjuncts keep both letters (बुद्ध buddh).
