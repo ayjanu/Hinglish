@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hv"
+version = "0.1.0"
+description = "HinglishVinglish language engine: HV-Roman romanization, normalization and resolution"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "hypothesis>=6", "ruff>=0.6", "mypy>=1.11"]
+
+[project.scripts]
+hv = "hv.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["hv"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
+# Devanagari and IPA characters in strings and comments are intentional.
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+packages = ["hv"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

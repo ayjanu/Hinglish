@@ -1,0 +1,32 @@
+# Every external data source the build may use. The build refuses any source without a
+# license tag, and refuses any download whose SHA-256 does not match (Development plan §1,
+# Data & licensing §2). Large files are cached locally and never committed.
+
+sources:
+  - id: dakshina-v1
+    description: Dakshina dataset v1.0 (Google Research), all 12 languages; we use hi/
+    url: https://storage.googleapis.com/gresearch/dakshina/dakshina_dataset_v1.0.tar
+    sha256: 83530bec211893d9df429298f42e63c350c25ad56f9f5172f85edb0575ee5b03
+    bytes: 2008340480
+    license: CC-BY-SA-4.0
+    tags: [commercial-ok, share-alike, attribution]
+    attribution: >-
+      Roark et al., "Processing South Asian Languages Written in the Latin Script:
+      the Dakshina Dataset", LREC 2020. https://github.com/google-research-datasets/dakshina
+
+  - id: aksharantar-hi
+    description: Aksharantar Hindi transliteration pairs (AI4Bharat). Phase 1 (P1-03).
+    url: null  # TODO(P1-03): pin the Hugging Face file URL and checksum
+    sha256: null
+    license: CC-BY-4.0 (manual) / CC0-1.0 (mined)
+    tags: [commercial-ok, attribution, verify-license]
+    attribution: >-
+      Madhani et al., "Aksharantar: Open Indic-language Transliteration datasets and
+      models for the Next Billion Users". https://github.com/AI4Bharat/IndicXlit
+
+  - id: iitb-en-hi
+    description: IIT Bombay English-Hindi parallel corpus. Research and evaluation only.
+    url: null
+    sha256: null
+    license: research-noncommercial
+    tags: [noncommercial]

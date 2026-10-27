@@ -1,0 +1,7 @@
+# Build profiles decide which license tags may enter a build. A source is allowed only if
+# every one of its tags is in the profile's accept list.
+dev:
+  accept: [commercial-ok, share-alike, attribution, verify-license, noncommercial]
+commercial:
+  accept: [commercial-ok, share-alike, attribution]
+  require_attribution_file: true

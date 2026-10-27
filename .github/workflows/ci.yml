@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main, phase-0]
+  pull_request:
+  schedule:
+    - cron: "17 7 * * *" # nightly gold-set evaluation
+
+jobs:
+  engine:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: engine
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv venv --python 3.12
+      - run: uv pip install -e ".[dev]" pyyaml
+      - name: Lint
+        run: uv run ruff check hv tests && uv run ruff format --check hv tests
+      - name: Type-check
+        run: uv run mypy
+      - name: Unit, golden, property and contract tests
+        run: uv run pytest -q
+
+  gold-set:
+    # Agreement with real romanizations on Dakshina (Development plan §5). Runs nightly and
+    # on changes to language code or data. The ~2 GB archive is cached between runs.
+    if: github.event_name == 'schedule' || github.event_name == 'push'
+    runs-on: ubuntu-latest
+    env:
+      HV_DATA_CACHE: ${{ github.workspace }}/.data-cache
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/cache@v4
+        with:
+          path: .data-cache
+          key: dakshina-v1-83530bec
+      - run: pip install pyyaml -e engine
+      - run: cd data-build && python build_gold_hi.py
+      - run: python eval/report_hi.py --split dev
